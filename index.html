@@ -135,13 +135,11 @@
 
       <button type="submit">Gửi</button>
 
-      <!-- Nút nhà phát triển được đặt sau nút Gửi -->
       <div class="dev-btn-wrapper">
         <button id="devButton" type="button">🔒 Dành cho nhà phát triển</button>
       </div>
     </form>
 
-    <!-- Vùng chứa bảng kết quả -->
     <div id="resultsSection">
       <h2>Dữ liệu đã nhận</h2>
       <table id="resultsTable">
@@ -177,18 +175,11 @@
       const activities = document.getElementById('activities').value;
       const traits = document.getElementById('traits').value;
   
-      // Gửi dữ liệu về server trên Replit
       fetch("https://script.google.com/macros/s/AKfycbwXLa6oc1skb8LP0Le931Zhqd9W41MXHqTljhqbzMi9QKXqQxI2Z-C_DEuWhWE6eG9-/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: name,
-          class: userClass,
-          interest: interest,
-          actions: actions,
-          subject: subject,
-          activities: activities,
-          traits: traits
+          name, userClass, interest, actions, subject, activities, traits
         })
       })
       .then(response => {
@@ -203,8 +194,17 @@
         console.error("Lỗi mạng:", error);
         alert("Không thể kết nối đến máy chủ.");
       });
+  
+      document.getElementById("devButton").addEventListener("click", function() {
+        const inputKey = prompt("Vui lòng nhập mã truy cập:");
+        if (inputKey === KEY_ACCESS) {
+          document.getElementById("resultsSection").style.display = "block";
+          alert("Truy cập thành công!");
+        } else {
+          alert("Mã truy cập sai!");
+        }
+      });
     });
   </script>
-  
 </body>
 </html>
