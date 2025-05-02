@@ -164,6 +164,8 @@
   </div>
 
   <script>
+    const KEY_ACCESS = "To-ba-phat-hanh-tam-4"; // Mã key bảo mật
+  
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
       e.preventDefault();
   
@@ -175,7 +177,7 @@
       const activities = document.getElementById('activities').value;
       const traits = document.getElementById('traits').value;
   
-      // Thay YOUR_NEW_DEPLOYMENT_ID bằng link Google Apps Script của bạn
+      // Gửi dữ liệu về server trên Replit
       fetch("https://script.google.com/macros/s/AKfycbwQFPfzIJQFCTgevkVg_LeToCqJKvv0jOF5svpqIbAc2-QpHSLyhzK9_f7A4g0lTBgj/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -203,7 +205,6 @@
       });
     });
   </script>
-  
   
 </body>
 </html>
