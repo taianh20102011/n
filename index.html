@@ -62,36 +62,6 @@
     button:hover {
       background-color: #1c5980;
     }
-    table {
-      margin-top: 30px;
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      background-color: #ecf0f1;
-    }
-    #resultsSection {
-      display: none;
-      margin-top: 50px;
-    }
-    #devButton {
-      background-color: #27ae60;
-      margin-left: auto;
-      margin-top: 10px;
-    }
-    #devButton:hover {
-      background-color: #1e8449;
-    }
-    .dev-btn-wrapper {
-      text-align: right;
-    }
   </style>
 </head>
 <body>
@@ -134,84 +104,33 @@
       <textarea id="traits" required></textarea>
 
       <button type="submit">Gửi</button>
-
-      <div class="dev-btn-wrapper">
-        <button id="devButton" type="button">🔒 Dành cho nhà phát triển</button>
-      </div>
     </form>
-
-    <div id="resultsSection">
-      <h2>Dữ liệu đã nhận</h2>
-      <table id="resultsTable">
-        <thead>
-          <tr>
-            <th>Họ tên</th>
-            <th>Lớp</th>
-            <th>Nghề nghiệp & lý do</th>
-            <th>Hành động thể hiện</th>
-            <th>Môn học yêu thích</th>
-            <th>Hoạt động say mê</th>
-            <th>Tính cách phù hợp</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Dữ liệu sẽ hiển thị ở đây -->
-        </tbody>
-      </table>
-    </div>
   </div>
 
   <script>
-    const KEY_ACCESS = "To-ba-phat-hanh-tam-4"; // Mã key bảo mật
-
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const name = document.getElementById('name').value;
-      const userClass = document.getElementById('class').value;
-      const interest = document.getElementById('interest').value;
-      const actions = document.getElementById('actions').value;
-      const subject = document.getElementById('subject').value;
-      const activities = document.getElementById('activities').value;
-      const traits = document.getElementById('traits').value;
-
-      const formData = new URLSearchParams();
-      formData.append("name", name);
-      formData.append("userClass", userClass);
-      formData.append("interest", interest);
-      formData.append("actions", actions);
-      formData.append("subject", subject);
-      formData.append("activities", activities);
-      formData.append("traits", traits);
-
-      fetch("https://script.google.com/macros/s/AKfycbzFJCYd_z5fkMmPt3zmdkNPu-gD2MRy4y3mabvQIeDJA22l6GmyFODguBI7ouDihY9i/exec", {
-        method: "POST",
-        body: formData
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Dữ liệu đã được gửi và lưu!");
-          document.getElementById("surveyForm").reset();
-        } else {
-          alert("Lỗi khi gửi dữ liệu!");
-        }
-      })
-      .catch(error => {
-        console.error("Lỗi mạng:", error);
-        alert("Không thể kết nối đến máy chủ.");
+      const formData = new FormData(document.getElementById('surveyForm'));
+      const formDataObj = {};
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
       });
 
-      document.getElementById("devButton").addEventListener("click", function() {
-        const inputKey = prompt("Vui lòng nhập mã truy cập:");
-        if (inputKey === KEY_ACCESS) {
-          document.getElementById("resultsSection").style.display = "block";
-          alert("Truy cập thành công!");
-        } else {
-          alert("Mã truy cập sai!");
-        }
+      fetch("https://script.google.com/macros/s/AKfycbx_9VgilCz89s_v6EcPwQq5TRoMRQ3pvwXJyAx7MwiXooQ8M3ThEDQJ0AVyoFH4ZUv8DQ/exec", {
+        method: "POST",
+        body: JSON.stringify(formDataObj),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("Dữ liệu đã được gửi!");
+      })
+      .catch(error => {
+        console.error("Lỗi khi gửi dữ liệu:", error);
+        alert("Không thể gửi dữ liệu.");
       });
     });
   </script>
-
 </body>
 </html>
