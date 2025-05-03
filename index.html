@@ -1,80 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Khảo sát Hứng thú Nghề nghiệp</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f8fc;
-      padding: 20px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
     }
+
     .container {
-      max-width: 900px;
-      margin: auto;
-      background: #ffffff;
-      padding: 25px;
+      background: white;
+      padding: 30px 40px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
+
     h2 {
       text-align: center;
       color: #2c3e50;
+      margin-bottom: 25px;
     }
+
     label {
       display: block;
-      margin: 15px 0 5px;
+      margin-top: 18px;
       font-weight: bold;
+      color: #34495e;
     }
-    input[type="text"], textarea, select {
+
+    input[type="text"],
+    select,
+    textarea {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
+      padding: 10px 12px;
+      margin-top: 6px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      background-color: #f9f9f9;
       box-sizing: border-box;
+      font-size: 15px;
     }
-    select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 16px 16px;
-    }
+
     textarea {
       resize: vertical;
-      height: 80px;
+      min-height: 70px;
     }
+
     button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background-color: #2980b9;
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
       color: white;
+      font-size: 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #1c5980;
+      background-color: #2980b9;
+    }
+
+    .success {
+      color: green;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>Khảo sát Hứng thú Nghề nghiệp</h2>
+    <h2>Phiếu Khảo sát Hứng thú Nghề nghiệp</h2>
     <form id="surveyForm">
       <label for="name">Họ và tên:</label>
-      <input type="text" id="name" required>
+      <input type="text" id="name" name="name" required>
 
       <label for="class">Lớp:</label>
-      <select id="class" required>
-        <option value="">-- Chọn lớp --</option>
+      <select id="class" name="class" required>
+        <option value="" disabled selected>-- Chọn lớp của bạn --</option>
         <option value="8/1">8/1</option>
         <option value="8/2">8/2</option>
         <option value="8/3">8/3</option>
@@ -88,49 +100,52 @@
         <option value="8/11">8/11</option>
       </select>
 
-      <label for="interest">Bạn có hứng thú với nghề nghiệp nào? Vì sao?</label>
-      <textarea id="interest" required></textarea>
+      <label>Bạn có hứng thú với nghề nghiệp nào? Vì sao?</label>
+      <textarea name="interest" required></textarea>
 
-      <label for="actions">Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?</label>
-      <textarea id="actions" required></textarea>
+      <label>Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?</label>
+      <textarea name="action" required></textarea>
 
-      <label for="subject">Trong các môn học, bạn thích nhất hoặc học tốt nhất môn học nào?</label>
-      <textarea id="subject" required></textarea>
+      <label>Trong các môn học bạn thích nhất hay học tốt nhất môn học nào?</label>
+      <textarea name="favorite_subject" required></textarea>
 
-      <label for="activities">Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?</label>
-      <textarea id="activities" required></textarea>
+      <label>Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?</label>
+      <textarea name="activity" required></textarea>
 
-      <label for="traits">Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?</label>
-      <textarea id="traits" required></textarea>
+      <label>Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?</label>
+      <textarea name="personality" required></textarea>
 
-      <button type="submit">Gửi</button>
+      <button type="submit">Gửi khảo sát</button>
+      <div class="success" id="successMsg"></div>
     </form>
   </div>
 
   <script>
-    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+    const form = document.getElementById('surveyForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
 
-      const formData = new FormData(document.getElementById('surveyForm'));
-      const formDataObj = {};
-      formData.forEach((value, key) => {
-        formDataObj[key] = value;
-      });
+      try {
+        const response = await fetch('YOUR_WEB_APP_URL', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
 
-      fetch("https://script.google.com/macros/s/AKfycbzsDbyf_cAx9_h7JG0F8yUjPGvrmmpXdFKKifHAa-PzZdJJoFM_vRQMkXOXuv_P45IpnA/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(formDataObj),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert("Dữ liệu đã được gửi!");
-      })
-      .catch(error => {
-        console.error("Lỗi khi gửi dữ liệu:", error);
-        alert("Không thể gửi dữ liệu.");
-      });
+        form.reset();
+        successMsg.textContent = "✔ Gửi thành công! Cảm ơn bạn đã tham gia.";
+      } catch (error) {
+        alert("Đã có lỗi khi gửi dữ liệu.");
+        console.error(error);
+      }
     });
   </script>
 </body>
