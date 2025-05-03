@@ -312,7 +312,7 @@
         const dataSection = document.getElementById('dataSection');
         const loginBtn = document.getElementById('loginBtn');
         const adminPasswordInput = document.getElementById('adminPassword');
-        const loginError = document .getElementById('loginError');
+        const loginError = document.getElementById('loginError');
         const resultBody = document.getElementById('resultBody');
         const totalCountSpan = document.getElementById('totalCount');
 
@@ -334,27 +334,44 @@
                 return;
             }
 
-            const data = {
-                fullname: surveyForm.fullname.value.trim(),
-                classSelect: surveyForm.classSelect.value,
-                interestCareer: surveyForm.interestCareer.value.trim(),
-                actionsToShowInterest: surveyForm.actionsToShowInterest.value.trim(),
-                favSubject: surveyForm.favSubject.value.trim(),
-                hobbyActivities: surveyForm.hobbyActivities.value.trim(),
-                personalityTraits: surveyForm.personalityTraits.value.trim(),
-                timestamp: Date.now()
-            };
+            const fullname = surveyForm.fullname.value.trim();
 
-            db.ref('surveys').push(data)
-                .then(() => {
-                    messageDiv.style.color = "green";
-                    messageDiv.textContent = "Cảm ơn bạn đã hoàn thành khảo sát của tổ 5!";
-                    surveyForm.reset();
+            // Kiểm tra xem tên đầy đủ đã tồn tại hay chưa
+            db.ref('surveys').orderByChild('fullname').equalTo(fullname).once('value')
+                .then(snapshot => {
+                    if (snapshot.exists()) {
+                        messageDiv.style.color = "red";
+                        messageDiv.textContent = "Tên đầy đủ này đã được sử dụng. Vui lòng nhập tên khác.";
+                        return;
+                    }
+
+                    const data = {
+                        fullname: fullname,
+                        classSelect: surveyForm.classSelect.value,
+                        interestCareer: surveyForm.interestCareer.value.trim(),
+                        actionsToShowInterest: surveyForm.actionsToShowInterest.value.trim(),
+                        favSubject: surveyForm.favSubject.value.trim(),
+                        hobbyActivities: surveyForm.hobbyActivities.value.trim(),
+                        personalityTraits: surveyForm.personalityTraits.value.trim(),
+                        timestamp: Date.now()
+                    };
+
+                    db.ref('surveys').push(data)
+                        .then(() => {
+                            messageDiv.style.color = "green";
+                            messageDiv.textContent = "Cảm ơn bạn đã hoàn thành khảo sát của tổ 3!";
+                            surveyForm.reset();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            messageDiv.style.color = "red";
+                            messageDiv.textContent = "Lỗi khi gửi dữ liệu. Vui lòng thử lại.";
+                        });
                 })
                 .catch(error => {
                     console.error(error);
                     messageDiv.style.color = "red";
-                    messageDiv.textContent = "Lỗi khi gửi dữ liệu. Vui lòng thử lại.";
+                    messageDiv.textContent = "Lỗi khi kiểm tra dữ liệu. Vui lòng thử lại.";
                 });
         });
 
