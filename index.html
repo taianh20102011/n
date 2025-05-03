@@ -163,10 +163,10 @@
 
   <script>
     const KEY_ACCESS = "To-ba-phat-hanh-tam-4"; // Mã key bảo mật
-  
+
     document.getElementById('surveyForm').addEventListener('submit', function(e) {
       e.preventDefault();
-  
+
       const name = document.getElementById('name').value;
       const userClass = document.getElementById('class').value;
       const interest = document.getElementById('interest').value;
@@ -174,13 +174,19 @@
       const subject = document.getElementById('subject').value;
       const activities = document.getElementById('activities').value;
       const traits = document.getElementById('traits').value;
-  
+
+      const formData = new URLSearchParams();
+      formData.append("name", name);
+      formData.append("userClass", userClass);
+      formData.append("interest", interest);
+      formData.append("actions", actions);
+      formData.append("subject", subject);
+      formData.append("activities", activities);
+      formData.append("traits", traits);
+
       fetch("https://script.google.com/macros/s/AKfycbzFJCYd_z5fkMmPt3zmdkNPu-gD2MRy4y3mabvQIeDJA22l6GmyFODguBI7ouDihY9i/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name, userClass, interest, actions, subject, activities, traits
-        })
+        body: formData
       })
       .then(response => {
         if (response.ok) {
@@ -194,7 +200,7 @@
         console.error("Lỗi mạng:", error);
         alert("Không thể kết nối đến máy chủ.");
       });
-  
+
       document.getElementById("devButton").addEventListener("click", function() {
         const inputKey = prompt("Vui lòng nhập mã truy cập:");
         if (inputKey === KEY_ACCESS) {
@@ -206,5 +212,6 @@
       });
     });
   </script>
+
 </body>
 </html>
