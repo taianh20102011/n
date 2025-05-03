@@ -1,152 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Khảo sát Hứng thú Nghề nghiệp</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7f9fc;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .container {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      max-width: 700px;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      margin-top: 18px;
-      font-weight: bold;
-      color: #34495e;
-    }
-
-    input[type="text"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    button {
-      margin-top: 25px;
-      width: 100%;
-      padding: 12px;
-      background-color: #3498db;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-
-    .success {
-      color: green;
-      text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khảo Sát Hứng Thú Nghề Nghiệp</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Phiếu Khảo sát Hứng thú Nghề nghiệp</h2>
-    <form id="surveyForm">
-      <label for="name">Họ và tên:</label>
-      <input type="text" id="name" name="name" required>
+    <div class="survey-container">
+        <h1>Khảo Sát Hứng Thú Nghề Nghiệp</h1>
+        <form id="surveyForm">
+            <label for="name">Họ và Tên:</label>
+            <input type="text" id="name" name="name" required><br>
 
-      <label for="class">Lớp:</label>
-      <select id="class" name="class" required>
-        <option value="" disabled selected>-- Chọn lớp của bạn --</option>
-        <option value="8/1">8/1</option>
-        <option value="8/2">8/2</option>
-        <option value="8/3">8/3</option>
-        <option value="8/4">8/4</option>
-        <option value="8/5">8/5</option>
-        <option value="8/6">8/6</option>
-        <option value="8/7">8/7</option>
-        <option value="8/8">8/8</option>
-        <option value="8/9">8/9</option>
-        <option value="8/10">8/10</option>
-        <option value="8/11">8/11</option>
-      </select>
+            <label for="class">Lớp:</label>
+            <select id="class" name="class" required>
+                <option value="8/1">8/1</option>
+                <option value="8/2">8/2</option>
+                <option value="8/3">8/3</option>
+                <option value="8/4">8/4</option>
+                <option value="8/5">8/5</option>
+                <option value="8/6">8/6</option>
+                <option value="8/7">8/7</option>
+                <option value="8/8">8/8</option>
+                <option value="8/9">8/9</option>
+                <option value="8/10">8/10</option>
+                <option value="8/11">8/11</option>
+            </select><br>
 
-      <label>Bạn có hứng thú với nghề nghiệp nào? Vì sao?</label>
-      <textarea name="interest" required></textarea>
+            <label for="careerInterest">Bạn có hứng thú với nghề nghiệp nào? Vì sao?</label><br>
+            <textarea id="careerInterest" name="careerInterest" rows="4" required></textarea><br>
 
-      <label>Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?</label>
-      <textarea name="action" required></textarea>
+            <label for="actions">Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?</label><br>
+            <textarea id="actions" name="actions" rows="4" required></textarea><br>
 
-      <label>Trong các môn học bạn thích nhất hay học tốt nhất môn học nào?</label>
-      <textarea name="favorite_subject" required></textarea>
+            <label for="favoriteSubject">Trong các môn học bạn thích nhất hay học tốt nhất môn học nào?</label><br>
+            <textarea id="favoriteSubject" name="favoriteSubject" rows="4" required></textarea><br>
 
-      <label>Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?</label>
-      <textarea name="activity" required></textarea>
+            <label for="activities">Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?</label><br>
+            <textarea id="activities" name="activities" rows="4" required></textarea><br>
 
-      <label>Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?</label>
-      <textarea name="personality" required></textarea>
+            <label for="personality">Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?</label><br>
+            <textarea id="personality" name="personality" rows="4" required></textarea><br>
 
-      <button type="submit">Gửi khảo sát</button>
-      <div class="success" id="successMsg"></div>
-    </form>
-  </div>
+            <button type="submit" id="submitBtn">Gửi</button>
+        </form>
+    </div>
 
-  <script>
-    const form = document.getElementById('surveyForm');
-    const successMsg = document.getElementById('successMsg');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = {};
-      formData.forEach((value, key) => data[key] = value);
-
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzsDbyf_cAx9_h7JG0F8yUjPGvrmmpXdFKKifHAa-PzZdJJoFM_vRQMkXOXuv_P45IpnA/exec', {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-
-        form.reset();
-        successMsg.textContent = "✔ Gửi thành công! Cảm ơn bạn đã tham gia.";
-      } catch (error) {
-        alert("Đã có lỗi khi gửi dữ liệu.");
-        console.error(error);
-      }
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
