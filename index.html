@@ -250,7 +250,7 @@
             <div id="message" role="alert" aria-live="polite"></div>
         </form>
 
-        <button id="adminBtn" aria-label="Xem dữ liệu khảo sát (có mật khẩu)">Xem dữ liệu khảo sát - Tổ 3</button>
+        <button id="adminBtn" aria-label="Xem dữ liệu khảo sát (có mật khẩu)">Xem dữ liệu khảo sát</button>
 
     </main>
 
@@ -348,7 +348,7 @@
             db.ref('surveys').push(data)
                 .then(() => {
                     messageDiv.style.color = "green";
-                    messageDiv.textContent = "Cảm ơn bạn đã hoàn thành khảo sát!";
+                    messageDiv.textContent = "Cảm ơn bạn đã hoàn thành khảo sát của tổ 3!";
                     surveyForm.reset();
                 })
                 .catch(error => {
