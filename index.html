@@ -1,52 +1,468 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khảo Sát Hứng Thú Nghề Nghiệp</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Khảo Sát Hứng Thú Nghề Nghiệp</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6b8dd6, #2e4783);
+    color: #222;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  h2 {
+    color: #f0f0f0;
+    text-align: center;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+  }
+  form {
+    background: #fff;
+    padding: 25px 30px 40px 30px;
+    border-radius: 12px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  }
+  label {
+    display: block;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  input[type="text"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 1rem;
+    transition: 0.3s ease;
+    font-family: inherit;
+    resize: vertical;
+  }
+  input[type="text"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 6px #4a90e2a0;
+  }
+  select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%234a90e2" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px 18px;
+    padding-right: 40px;
+  }
+  textarea {
+    min-height: 80px;
+  }
+  button {
+    margin-top: 28px;
+    background: #4a90e2;
+    border: none;
+    color: white;
+    padding: 14px 0;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #357ABD;
+  }
+  #message {
+    margin-top: 18px;
+    font-weight: 700;
+    color: green;
+    text-align: center;
+  }
+
+  /* Admin modal & button */
+  #adminBtn {
+    margin: 20px auto 0 auto;
+    display: block;
+    background: #222;
+    color: #eee;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #0009;
+    transition: background 0.3s ease;
+  }
+  #adminBtn:hover {
+    background: #444;
+  }
+  #adminModal {
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  #adminContent {
+    background: white;
+    max-width: 80vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 20px 30px 30px 30px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
+    font-size: 0.9rem;
+    color: #222;
+  }
+  #adminClose {
+    float: right;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #444;
+  }
+  #adminContent h3 {
+    margin-top: 0;
+  }
+  #loginSection {
+    max-width: 320px;
+    margin: 80px auto 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  }
+  #loginSection input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    font-family: inherit;
+  }
+  #loginSection button {
+    margin-top: 20px;
+    background: #2b6cb0;
+    width: 100%;
+    border: none;
+    padding: 14px 0;
+    font-size: 1rem;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  #loginSection button:hover {
+    background: #224975;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px 8px;
+    text-align: left;
+  }
+  table th {
+    background: #4a90e2;
+    color: white;
+    position: sticky;
+    top: 0;
+  }
+  @media screen and (max-width: 520px) {
+    form {
+      padding: 20px 20px 30px 20px;
+    }
+    #adminContent {
+      max-width: 95vw;
+      max-height: 90vh;
+      padding: 15px 20px 25px 20px;
+    }
+  }
+</style>
 </head>
 <body>
-    <div class="survey-container">
-        <h1>Khảo Sát Hứng Thú Nghề Nghiệp</h1>
-        <form id="surveyForm">
-            <label for="name">Họ và Tên:</label>
-            <input type="text" id="name" name="name" required><br>
+  <main>
+    <h1>Khảo Sát Hứng Thú Nghề Nghiệp</h1>
+    <h2>Hãy điền thông tin và câu trả lời bên dưới</h2>
+    <form id="surveyForm" autocomplete="off">
+      <label for="fullname">Họ và tên<span style="color:red;"> *</span></label>
+      <input id="fullname" name="fullname" type="text" placeholder="Nhập họ và tên" required maxlength="100" />
 
-            <label for="class">Lớp:</label>
-            <select id="class" name="class" required>
-                <option value="8/1">8/1</option>
-                <option value="8/2">8/2</option>
-                <option value="8/3">8/3</option>
-                <option value="8/4">8/4</option>
-                <option value="8/5">8/5</option>
-                <option value="8/6">8/6</option>
-                <option value="8/7">8/7</option>
-                <option value="8/8">8/8</option>
-                <option value="8/9">8/9</option>
-                <option value="8/10">8/10</option>
-                <option value="8/11">8/11</option>
-            </select><br>
+      <label for="classSelect">Lớp<span style="color:red;"> *</span></label>
+      <select id="classSelect" name="classSelect" required>
+        <option value="" disabled selected>-- Chọn lớp --</option>
+        <option value="8/1">8/1</option>
+        <option value="8/2">8/2</option>
+        <option value="8/3">8/3</option>
+        <option value="8/4">8/4</option>
+        <option value="8/5">8/5</option>
+        <option value="8/6">8/6</option>
+        <option value="8/7">8/7</option>
+        <option value="8/8">8/8</option>
+        <option value="8/9">8/9</option>
+        <option value="8/10">8/10</option>
+        <option value="8/11">8/11</option>
+      </select>
 
-            <label for="careerInterest">Bạn có hứng thú với nghề nghiệp nào? Vì sao?</label><br>
-            <textarea id="careerInterest" name="careerInterest" rows="4" required></textarea><br>
+      <label for="interestCareer">Bạn có hứng thú với nghề nghiệp nào? Vì sao?<span style="color:red;"> *</span></label>
+      <textarea id="interestCareer" name="interestCareer" required placeholder="Trả lời câu hỏi..." maxlength="1000"></textarea>
 
-            <label for="actions">Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?</label><br>
-            <textarea id="actions" name="actions" rows="4" required></textarea><br>
+      <label for="actionsToShowInterest">Bạn đã làm những gì để thể hiện hứng thú với nghề nghiệp bạn yêu thích?<span style="color:red;"> *</span></label>
+      <textarea id="actionsToShowInterest" name="actionsToShowInterest" required placeholder="Trả lời câu hỏi..." maxlength="1000"></textarea>
 
-            <label for="favoriteSubject">Trong các môn học bạn thích nhất hay học tốt nhất môn học nào?</label><br>
-            <textarea id="favoriteSubject" name="favoriteSubject" rows="4" required></textarea><br>
+      <label for="favSubject">Trong các môn học bạn thích nhất hay học tốt nhất môn học nào?<span style="color:red;"> *</span></label>
+      <textarea id="favSubject" name="favSubject" required placeholder="Trả lời câu hỏi..." maxlength="500"></textarea>
 
-            <label for="activities">Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?</label><br>
-            <textarea id="activities" name="activities" rows="4" required></textarea><br>
+      <label for="hobbyActivities">Bạn thường hào hứng, say mê với những hoạt động hoặc công việc nào?<span style="color:red;"> *</span></label>
+      <textarea id="hobbyActivities" name="hobbyActivities" required placeholder="Trả lời câu hỏi..." maxlength="1000"></textarea>
 
-            <label for="personality">Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?</label><br>
-            <textarea id="personality" name="personality" rows="4" required></textarea><br>
+      <label for="personalityTraits">Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?<span style="color:red;"> *</span></label>
+      <textarea id="personalityTraits" name="personalityTraits" required placeholder="Trả lời câu hỏi..." maxlength="1000"></textarea>
 
-            <button type="submit" id="submitBtn">Gửi</button>
-        </form>
+      <button type="submit">Gởi</button>
+      <div id="message" role="alert" aria-live="polite"></div>
+    </form>
+
+    <button id="adminBtn" aria-label="Xem dữ liệu khảo sát (có mật khẩu)">Xem dữ liệu khảo sát</button>
+
+  </main>
+
+  <!-- Admin modal -->
+  <div id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle" tabindex="-1">
+    <div id="adminContent">
+      <span id="adminClose" role="button" aria-label="Đóng cửa sổ dữ liệu khảo sát" tabindex="0">&times;</span>
+      <h3 id="adminTitle">Dữ liệu khảo sát</h3>
+      <div id="loginSection">
+        <p>Nhập mật khẩu để xem dữ liệu:</p>
+        <input type="password" id="adminPassword" aria-label="Mật khẩu admin" />
+        <button id="loginBtn">Đăng nhập</button>
+        <p id="loginError" style="color: red; font-weight: bold; display:none;"></p>
+      </div>
+      <div id="dataSection" style="display:none;">
+        <p><strong>Tổng số người đã làm khảo sát: <span id="totalCount">0</span></strong></p>
+        <table id="resultTable" aria-label="Bảng kết quả khảo sát">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Họ tên</th>
+              <th>Lớp</th>
+              <th>Hứng thú nghề nghiệp</th>
+              <th>Hành động thể hiện hứng thú</th>
+              <th>Môn học yêu thích / học tốt</th>
+              <th>Hoạt động hào hứng</th>
+              <th>Nét tính cách phù hợp</th>
+              <th>Thời gian gửi</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody"></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+<script>
+  // Firebase configuration
+  // NOTE: User must replace the below config with their own Firebase project config
+  // For ease of use, I will provide a temporary free public test config here (User should ideally set up their own)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDALDjYOEe8Ga2TfHQE11BpJt0KsD_htHE",
+    authDomain: "career-survey-webapp.firebaseapp.com",
+    databaseURL: "https://career-survey-webapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "career-survey-webapp",
+    storageBucket: "career-survey-webapp.appspot.com",
+    messagingSenderId: "397686005923",
+    appId: "1:397686005923:web:ad015498f3e3d0785d47e1"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // DOM elements
+  const surveyForm = document.getElementById('surveyForm');
+  const messageDiv = document.getElementById('message');
+  const adminBtn = document.getElementById('adminBtn');
+  const adminModal = document.getElementById('adminModal');
+  const adminClose = document.getElementById('adminClose');
+  const loginSection = document.getElementById('loginSection');
+  const dataSection = document.getElementById('dataSection');
+  const loginBtn = document.getElementById('loginBtn');
+  const adminPasswordInput = document.getElementById('adminPassword');
+  const loginError = document.getElementById('loginError');
+  const resultBody = document.getElementById('resultBody');
+  const totalCountSpan = document.getElementById('totalCount');
+
+  // Password for admin access - change this string to your preferred secure password
+  const ADMIN_PASSWORD = "admin123"; 
+
+  // Helper to format datetime in Vietnamese style
+  function formatDateTime(date) {
+    return date.toLocaleString('vi-VN', {
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+  }
+
+  // Submit form data to Firebase
+  surveyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    messageDiv.textContent = "";
+    if (!surveyForm.checkValidity()) {
+      messageDiv.style.color = "red";
+      messageDiv.textContent = "Vui lòng điền đầy đủ các trường bắt buộc.";
+      return;
+    }
+
+    // Collect data
+    const data = {
+      fullname: surveyForm.fullname.value.trim(),
+      classSelect: surveyForm.classSelect.value,
+      interestCareer: surveyForm.interestCareer.value.trim(),
+      actionsToShowInterest: surveyForm.actionsToShowInterest.value.trim(),
+      favSubject: surveyForm.favSubject.value.trim(),
+      hobbyActivities: surveyForm.hobbyActivities.value.trim(),
+      personalityTraits: surveyForm.personalityTraits.value.trim(),
+      timestamp: Date.now()
+    };
+
+    // Push to firebase database under "surveys"
+    db.ref('surveys').push(data)
+      .then(() => {
+        messageDiv.style.color = "green";
+        messageDiv.textContent = "Cảm ơn bạn đã hoàn thành khảo sát!";
+        surveyForm.reset();
+      })
+      .catch(error => {
+        console.error(error);
+        messageDiv.style.color = "red";
+        messageDiv.textContent = "Lỗi khi gửi dữ liệu. Vui lòng thử lại.";
+      });
+  });
+
+  // Admin controls
+  adminBtn.addEventListener('click', () => {
+    // Clear previous and show login
+    loginSection.style.display = "block";
+    dataSection.style.display = "none";
+    loginError.style.display = "none";
+    adminPasswordInput.value = "";
+    adminModal.style.display = "flex";
+    adminPasswordInput.focus();
+  });
+  adminClose.addEventListener('click', () => {
+    adminModal.style.display = "none";
+  });
+  adminModal.addEventListener('click', (e) => {
+    if (e.target === adminModal) {
+      adminModal.style.display = "none";
+    }
+  });
+  adminClose.addEventListener('keypress', (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      adminModal.style.display = "none";
+    }
+  });
+
+  loginBtn.addEventListener('click', () => {
+    const pass = adminPasswordInput.value;
+    if(pass === ADMIN_PASSWORD) {
+      loginError.style.display = "none";
+      loadSurveyData();
+    } else {
+      loginError.textContent = "Mật khẩu không đúng, vui lòng thử lại.";
+      loginError.style.display = "block";
+      adminPasswordInput.focus();
+    }
+  });
+
+  // Allow Enter key on password input to trigger login
+  adminPasswordInput.addEventListener('keyup', (e) => {
+    if (e.key === "Enter") loginBtn.click();
+  });
+
+  // Load survey data from Firebase and display
+  function loadSurveyData() {
+    loginSection.style.display = "none";
+    dataSection.style.display = "block";
+    resultBody.innerHTML = "";
+    totalCountSpan.textContent = "0";
+
+    db.ref('surveys').once('value')
+      .then(snapshot => {
+        const data = snapshot.val();
+        if(!data) {
+          resultBody.innerHTML = '<tr><td colspan="9" style="text-align:center;">Chưa có dữ liệu khảo sát nào.</td></tr>';
+          totalCountSpan.textContent = "0";
+          return;
+        }
+
+        const entries = Object.entries(data);
+        totalCountSpan.textContent = entries.length;
+
+        entries.forEach(([key, val], index) => {
+          const dateStr = val.timestamp ? formatDateTime(new Date(val.timestamp)) : 'N/A';
+          // Escape HTML content to prevent injection
+          const escapeHTML = (str) => {
+            if(!str) return '';
+            return str.replace(/[&<>"']/g, (m) => {
+              switch(m) {
+                case '&': return '&amp;';
+                case '<': return '&lt;';
+                case '>': return '&gt;';
+                case '"': return '&quot;';
+                case '\'': return '&#39;';
+                default: return m;
+              }
+            });
+          };
+          const row = `
+            <tr>
+              <td>${index+1}</td>
+              <td>${escapeHTML(val.fullname)}</td>
+              <td>${escapeHTML(val.classSelect)}</td>
+              <td>${escapeHTML(val.interestCareer)}</td>
+              <td>${escapeHTML(val.actionsToShowInterest)}</td>
+              <td>${escapeHTML(val.favSubject)}</td>
+              <td>${escapeHTML(val.hobbyActivities)}</td>
+              <td>${escapeHTML(val.personalityTraits)}</td>
+              <td>${dateStr}</td>
+            </tr>
+          `;
+          resultBody.insertAdjacentHTML('beforeend', row);
+        });
+      })
+      .catch(error => {
+        resultBody.innerHTML = `<tr><td colspan="9" style="color: red; text-align:center;">Lỗi tải dữ liệu: ${error.message}</td></tr>`;
+        totalCountSpan.textContent = "0";
+      });
+  }
+</script>
