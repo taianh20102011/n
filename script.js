@@ -20,7 +20,7 @@ document.getElementById("surveyForm").addEventListener("submit", function(event)
     };
 
     // Gửi dữ liệu tới Google Sheets
-    fetch("https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_URL/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzW1wCrAIRj_s7V6OWsyNyvcrMVc4hcvgSGcB8Fj5UoDQw6fpNYT1qmidJsFRyr3rYy4g/exec", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
