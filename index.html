@@ -117,8 +117,9 @@
         formDataObj[key] = value;
       });
 
-      fetch("https://script.google.com/macros/s/AKfycbx_9VgilCz89s_v6EcPwQq5TRoMRQ3pvwXJyAx7MwiXooQ8M3ThEDQJ0AVyoFH4ZUv8DQ/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzsDbyf_cAx9_h7JG0F8yUjPGvrmmpXdFKKifHAa-PzZdJJoFM_vRQMkXOXuv_P45IpnA/exec", {
         method: "POST",
+        mode: "no-cors",
         body: JSON.stringify(formDataObj),
         headers: { 'Content-Type': 'application/json' }
       })
