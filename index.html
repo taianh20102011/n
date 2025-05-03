@@ -246,7 +246,7 @@
       <label for="personalityTraits">Bạn thấy nét tính cách nào của bạn phù hợp với nghề nghiệp bạn hứng thú?<span style="color:red;"> *</span></label>
       <textarea id="personalityTraits" name="personalityTraits" required placeholder="Trả lời câu hỏi..." maxlength="1000"></textarea>
 
-      <button type="submit">Gởi</button>
+      <button type="submit">Gửi</button>
       <div id="message" role="alert" aria-live="polite"></div>
     </form>
 
@@ -466,3 +466,31 @@
       });
   }
 </script>
+
+<!-- Instructions for user to replace Firebase config in comments below -->
+
+<!--
+INSTRUCTIONS - CHÚ Ý QUAN TRỌNG
+
+1. Để sử dụng trang web này để khảo sát với lưu trữ dữ liệu:
+- Bạn cần tạo 1 dự án Firebase miễn phí tại https://console.firebase.google.com/
+- Sau khi tạo dự án, vào phần Realtime Database và tạo database, chọn chế độ test để dễ dàng sử dụng (theo hướng dẫn firebase)
+- Lấy thông tin cấu hình Firebase của bạn (firebaseConfig) trong phần Project Settings > General > Your apps - SDK setup và thay thế phần cấu hình firebaseConfig trong đoạn code JavaScript trên
+- Đảm bảo để database Realtime Database có thể ghi dữ liệu mà không cần xác thực (chế độ test) hoặc cấu hình rule phù hợp.
+
+2. Mật khẩu xem dữ liệu: trong biến ADMIN_PASSWORD trong script, bạn có thể đổi thành mật khẩu bạn muốn.
+
+3. Để xem dữ liệu khảo sát: Click nút "Xem dữ liệu khảo sát", nhập mật khẩu để truy cập dữ liệu và thống kê số người đã làm khảo sát.
+
+4. Trang web này thiết kế responsive, có thể sử dụng dễ dàng trên thiết bị di động.
+
+5. Nếu không muốn dùng Firebase, bạn cần tự triển khai backend lưu trữ (không khuyến khích vì yêu cầu của bạn).
+
+6. Kích thước trang web và các trường đã được tối ưu cho người dùng và dễ sử dụng.
+
+Bạn có thể mở file HTML trực tiếp trên trình duyệt để sử dụng.
+
+Chúc bạn thành công!
+-->
+
+
