@@ -19,521 +19,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
 
-    <style>
-        :root {
-            --primary: #1e88e5;
-            --primary-dark: #1565c0;
-            --secondary: #43a047;
-            --accent: #ffb300;
-            --bg-light: #f8faff;
-            --text-main: #1e293b;
-            --text-sub: #64748b;
-            --white: #ffffff;
-            --grad-main: linear-gradient(135deg, #1e88e5 0%, #00f2fe 100%);
-            --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Utilities */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .btn-main {
-            padding: 12px 30px;
-            background: var(--grad-main);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
-            font-size: 1rem;
-        }
-
-        .btn-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
-        }
-
-        .btn-main:active {
-            transform: translateY(0);
-        }
-
-        .btn-outline {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            box-shadow: none;
-        }
-
-        /* Khu vực video phỏng vấn */
-        .interview-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            border: 2px dashed #007bff;
-            /* Tạo viền nét đứt để dễ nhận diện khu vực ghép */
-            text-align: center;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            /* Tỉ lệ 16:9 */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            margin-top: 15px;
-            border-radius: 8px;
-        }
-
-        .video-container iframe,
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 15px 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
-            transition: 0.3s;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 20px 80px;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 span {
-            background: var(--grad-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-sub);
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Sections */
-        section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-
-        .section-title p {
-            color: var(--text-sub);
-            font-size: 1.1rem;
-        }
-
-        /* About & Media */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .media-container {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .video-box {
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-card);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .gallery-grid img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .gallery-grid img:hover {
-            transform: scale(1.02);
-        }
-
-        /* Team */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .member-card {
-            background: var(--white);
-            padding: 40px 20px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: var(--shadow-card);
-            transition: 0.3s;
-            border: 1px solid #f0f0f0;
-        }
-
-        .member-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-        }
-
-        .member-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: #e2e8f0;
-            margin: 0 auto 20px;
-            object-fit: cover;
-        }
-
-        /* Quiz UI */
-        .quiz-wrapper {
-            background: var(--white);
-            border-radius: 30px;
-            box-shadow: var(--shadow-card);
-            padding: 50px;
-            max-width: 900px;
-            margin: 0 auto;
-            border: 1px solid #eef2f6;
-        }
-
-        .progress-container {
-            margin-bottom: 30px;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        #p-fill {
-            height: 100%;
-            background: var(--grad-main);
-            width: 0%;
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .question-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            min-height: 60px;
-        }
-
-        .opt-btn {
-            width: 100%;
-            padding: 20px 25px;
-            margin-bottom: 15px;
-            border: 2px solid #f1f5f9;
-            border-radius: 16px;
-            background: white;
-            cursor: pointer;
-            text-align: left;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .opt-btn:hover {
-            border-color: var(--primary);
-            background: #f8fbff;
-            color: var(--primary);
-        }
-
-        .opt-btn i {
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: 0.2s;
-        }
-
-        .opt-btn:hover i {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Results Area */
-        #result-body {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-
-        .result-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .secure-badge {
-            display: inline-block;
-            background: #ecfdf5;
-            color: #059669;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .roadmap-box {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: 16px;
-            border-left: 4px solid var(--primary);
-            margin: 20px 0;
-        }
-
-        .roadmap-box ul {
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-
-        .roadmap-box li {
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        /* Stats & Contact */
-        .chart-container {
-            position: relative;
-            height: 350px;
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 1rem;
-            transition: 0.3s;
-            background: #fff;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            padding: 60px 0;
-            background: #fff;
-            text-align: center;
-            border-top: 1px solid #f1f5f9;
-            margin-top: 80px;
-        }
-
-        footer p {
-            color: var(--text-sub);
-        }
-
-        .btn-loading {
-            pointer-events: none;
-            opacity: 0.8;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(5px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-links li a.active-link {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            /* Simplified for mobile */
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-
-            .about-grid,
-            .media-container {
-                grid-template-columns: 1fr;
-            }
-
-            .quiz-wrapper {
-                padding: 25px;
-            }
-
-            .opt-btn {
-                padding: 15px;
-                font-size: 1rem;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -715,7 +201,7 @@
                         <button class="btn-main" onclick="location.reload()" style="background: #64748b;"><i
                                 class="fas fa-redo"></i> Làm lại</button>
                         <button class="btn-main" id="save-firebase"><i class="fas fa-cloud-upload-alt"></i> Lưu Đám
-                            Mây</button>
+                            Mây ( PHỤC VỤ CHO DỮ LIỆU NGƯỜI DÙNG)</button>
                         <button class="btn-main" onclick="exportPDF()" style="background: #e11d48;"><i
                                 class="fas fa-file-pdf"></i> Xuất Báo Cáo PDF</button>
                     </div>
@@ -723,12 +209,19 @@
             </div>
         </div>
     </section>
-
+    <div class="stats-summary" style="text-align: center; margin-bottom: 20px;">
+        <div
+            style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: inline-block;">
+            <h4 style="color: #64748b; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;">Tổng số lượt
+                đánh giá</h4>
+            <span id="total-tests" style="font-size: 2.5rem; font-weight: 800; color: #1e88e5;">0</span>
+        </div>
+    </div>
     <section id="stats" class="reveal" style="background: #f8faff;">
         <div class="container">
             <div class="section-title">
                 <h2>Thống Kê Cộng Đồng</h2>
-                <p>Dữ liệu thực từ hệ thống Firebase</p>
+                <p>Dữ liệu thực</p>
             </div>
             <div class="chart-container">
                 <canvas id="globalChart"></canvas>
@@ -829,142 +322,246 @@
             "Nghiệp vụ": { name: "Nghiệp vụ & Tổ chức", desc: "Bạn cẩn thận, ngăn nắp và là 'xương sống' của mọi tổ chức.", steps: ["Thành thạo tin học văn phòng", "Học về quy trình và hệ thống", "Rèn tính tỉ mỉ, chính xác"] }
         };
 
+        /* --- THAY THẾ ĐOẠN CODE NÀY TRONG THẺ <SCRIPT> --- */
+
+        // 1. Cập nhật State để lưu lịch sử (history)
         let state = {
             currentIdx: 0,
-            scores: { "Kỹ thuật": 0, "Nghiên cứu": 0, "Nghệ thuật": 0, "Xã hội": 0, "Quản lý": 0, "Nghiệp vụ": 0 }
+            scores: { "Kỹ thuật": 0, "Nghiên cứu": 0, "Nghệ thuật": 0, "Xã hội": 0, "Quản lý": 0, "Nghiệp vụ": 0 },
+            history: [] // Mảng lưu các lựa chọn trước đó để có thể Undo (Quay lại)
         };
 
+        // Biến lưu biểu đồ kết quả để tránh lỗi vẽ đè lên nhau
+        let resultChartInstance = null;
+
+        // 2. Hàm Render câu hỏi có thêm nút Quay lại & Bỏ qua
         function renderQuestion() {
             if (state.currentIdx < questions.length) {
                 const q = questions[state.currentIdx];
+
+                // Cập nhật text và tiến độ
                 document.getElementById('q-text').innerText = q.q;
                 document.getElementById('q-counter').innerText = `${state.currentIdx + 1}/${questions.length}`;
-                document.getElementById('p-fill').style.width = `${(state.currentIdx / questions.length) * 100}%`;
+                document.getElementById('p-fill').style.width = `${((state.currentIdx) / questions.length) * 100}%`;
 
                 const options = [
-                    { t: "Rất thích / Đúng với tôi", v: 2, i: "fa-heart" },
-                    { t: "Bình thường / Có thể", v: 1, i: "fa-check" },
-                    { t: "Không phù hợp", v: 0, i: "fa-times" }
+                    { t: "Rất thích / Đúng với tôi", v: 2, i: "fa-heart", color: "#ec4899" }, // Thêm màu cho đẹp
+                    { t: "Bình thường / Có thể", v: 1, i: "fa-check", color: "#3b82f6" },
+                    { t: "Không phù hợp", v: 0, i: "fa-times", color: "#64748b" }
                 ];
 
-                document.getElementById('options-container').innerHTML = options.map(opt =>
+                // Render các nút đáp án
+                let html = options.map(opt =>
                     `<button class="opt-btn" onclick="handleAnswer('${q.s}', ${opt.v})">
-                            <span>${opt.t}</span><i class="fas ${opt.i}"></i>
-                        </button>`
+                <span>${opt.t}</span><i class="fas ${opt.i}" style="color: ${opt.color}"></i>
+            </button>`
                 ).join('');
+
+                // Render thêm 2 nút điều hướng (Back / Skip)
+                const disableBack = state.currentIdx === 0 ? 'disabled' : ''; // Nếu câu 1 thì khóa nút Back
+
+                html += `
+            <div class="quiz-nav-buttons">
+                <button class="btn-nav btn-back" onclick="goBack()" ${disableBack}>
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+                <button class="btn-nav btn-skip" onclick="skipQuestion('${q.s}')">
+                    Bỏ qua câu này <i class="fas fa-forward"></i>
+                </button>
+            </div>
+        `;
+
+                document.getElementById('options-container').innerHTML = html;
             } else {
                 showResult();
             }
         }
 
+        // 3. Xử lý khi chọn đáp án (Lưu vào lịch sử)
         window.handleAnswer = (category, value) => {
+            // Cộng điểm
             state.scores[category] += value;
+
+            // Lưu vào lịch sử để sau này quay lại thì biết mà trừ điểm
+            state.history.push({ category: category, value: value });
+
+            // Chuyển câu
             state.currentIdx++;
             renderQuestion();
         }
 
+        // 4. Xử lý Bỏ qua (Cộng 0 điểm, vẫn lưu lịch sử)
+        window.skipQuestion = (category) => {
+            state.history.push({ category: category, value: 0 }); // Lưu 0 điểm
+            state.currentIdx++;
+            renderQuestion();
+        }
+
+        // 5. Xử lý Quay lại (Undo điểm số)
+        window.goBack = () => {
+            if (state.currentIdx > 0) {
+                // Lấy hành động gần nhất
+                const lastAction = state.history.pop();
+
+                // Trừ điểm đã cộng (nếu trước đó chọn skip thì value là 0, trừ 0 vẫn đúng)
+                if (lastAction) {
+                    state.scores[lastAction.category] -= lastAction.value;
+                }
+
+                // Lùi lại 1 câu
+                state.currentIdx--;
+                renderQuestion();
+            }
+        }
+        /* --- DÁN ĐOẠN NÀY VÀO DƯỚI HÀM goBack() --- */
+
         function showResult() {
+            // 1. Ẩn giao diện câu hỏi, hiện giao diện kết quả
             document.getElementById('quiz-interface').style.display = 'none';
             document.getElementById('result-body').style.display = 'block';
 
             const totalQuestions = questions.length;
 
-            // 1️⃣ Chuẩn hóa điểm (0 → 1)
+            // 2. Tính toán điểm số (Chuẩn hóa về thang 0-1)
             const normalizedScores = {};
             for (let k in state.scores) {
-                normalizedScores[k] = state.scores[k] / (2 * totalQuestions);
+                // Chia cho (2 * tổng số câu) vì điểm tối đa mỗi câu là 2
+                // Tuy nhiên logic cũ chia cho tổng câu, ta giữ nguyên logic cũ để tương thích
+                normalizedScores[k] = state.scores[k];
             }
 
-            // 2️⃣ Sắp xếp
-            const sorted = Object.entries(normalizedScores)
-                .sort((a, b) => b[1] - a[1]);
+            // 3. Sắp xếp điểm từ cao xuống thấp
+            const sorted = Object.entries(normalizedScores).sort((a, b) => b[1] - a[1]);
 
             const [top1, score1] = sorted[0];
             const [top2, score2] = sorted[1];
-            const [top3, score3] = sorted[2];
 
-            // 3️⃣ Độ chắc chắn
-            const confidence = Math.round(score1 * 100);
+            // 4. Tính độ chắc chắn (tương đối)
+            // Giả sử điểm tối đa là 30 (15 câu x 2 điểm). Tính % dựa trên điểm thực tế
+            const maxPossibleScore = questions.length * 2;
+            const confidence = Math.round((score1 / maxPossibleScore) * 100);
 
-            // 4️⃣ Phân loại hồ sơ
-            let profileType = "Định hướng rõ";
-            if (score1 - score2 < 0.05) profileType = "Đa năng – linh hoạt";
-            if (score1 < 0.35) profileType = "Đang khám phá bản thân";
+            // 5. Phân loại kiểu hồ sơ
+            let profileType = "Định hướng rõ rệt";
+            // Nếu điểm top 1 và top 2 quá gần nhau
+            if (Math.abs(score1 - score2) <= 2) profileType = "Đa năng – Linh hoạt";
+            // Nếu điểm cao nhất quá thấp (dưới 30% tổng điểm)
+            if (score1 < (maxPossibleScore * 0.3)) profileType = "Đang khám phá bản thân";
 
-            // 5️⃣ AI nhận xét thông minh
+            // 6. Tạo nhận xét thông minh (AI Comment)
             let aiComment = `
-                    <b>${jobLibrary[top1].name}</b> là nhóm phù hợp nhất với bạn hiện tại.<br><br>
-                    ${jobLibrary[top1].desc}
-                `;
+        <b>${jobLibrary[top1].name}</b> là nhóm nghề phù hợp nhất với bạn dựa trên các câu trả lời.<br><br>
+        ${jobLibrary[top1].desc}
+    `;
 
-            if (score2 > 0.3) {
+            // Nhận xét thêm về nhóm thứ 2 nếu điểm khá cao
+            if (score2 > (maxPossibleScore * 0.4)) {
                 aiComment += `
-                        <br><br>
-                        🔹 <b>Tố chất kết hợp:</b> Bạn còn mang màu sắc của <b>${jobLibrary[top2].name}</b>,
-                        cho thấy khả năng thích nghi và phát triển đa lĩnh vực.
-                    `;
+            <br><br>
+            🔹 <b>Tố chất kết hợp:</b> Bạn cũng có tố chất khá mạnh của nhóm <b>${jobLibrary[top2].name}</b>. 
+            Sự kết hợp này giúp bạn có lợi thế trong các công việc đòi hỏi đa kỹ năng.
+        `;
             }
 
-            if (profileType === "Đa năng – linh hoạt") {
+            if (profileType === "Đa năng – Linh hoạt") {
                 aiComment += `
-                        <br><br>
-                        ⚡ <i>Bạn không nên bó mình vào một nghề cố định sớm – hãy chọn môi trường cho phép thử nghiệm.</i>
-                    `;
+            <br><br>
+            ⚡ <i>Lời khuyên: Bạn có khả năng thích nghi tốt ở nhiều môi trường. Đừng vội đóng khung mình, hãy thử trải nghiệm thực tế cả hai lĩnh vực trên.</i>
+        `;
             }
 
             if (profileType === "Đang khám phá bản thân") {
                 aiComment += `
-                        <br><br>
-                        🌱 <i>Kết quả cho thấy bạn đang trong giai đoạn khám phá. Trải nghiệm thực tế sẽ quan trọng hơn điểm số.</i>
-                    `;
+            <br><br>
+            🌱 <i>Lời khuyên: Kết quả cho thấy bạn chưa thực sự thích hẳn lĩnh vực nào. Đây là giai đoạn bình thường, hãy tham gia nhiều hoạt động ngoại khóa để hiểu mình hơn nhé.</i>
+        `;
             }
 
-            // 6️⃣ Render UI
-            document.getElementById('res-job').innerHTML =
-                `Nhóm chính: <b>${jobLibrary[top1].name}</b>`;
+            // 7. Hiển thị thông tin ra màn hình HTML
+            document.getElementById('res-job').innerHTML = `Nhóm chính: <b>${jobLibrary[top1].name}</b>`;
 
             document.getElementById('res-desc').innerHTML = `
-                    ${aiComment}
-                    <br><br>
-                    🎯 <b>Độ phù hợp ước tính:</b> ${confidence}%
-                    <br>
-                    🧠 <b>Kiểu hồ sơ:</b> ${profileType}
-                `;
+        ${aiComment}
+        <br><br>
+        🎯 <b>Độ phù hợp ước tính:</b> ${confidence}%
+        <br>
+        🧠 <b>Kiểu hồ sơ:</b> ${profileType}
+    `;
 
+            // Hiển thị lộ trình
             document.getElementById('res-roadmap').innerHTML =
                 jobLibrary[top1].steps.map(s => `<li>${s}</li>`).join('');
 
+            // 8. Cấu hình nút lưu và vẽ biểu đồ
+            // Kiểm tra xem hàm setupFirebaseSave có tồn tại không trước khi gọi
+            if (typeof setupFirebaseSave === "function") {
+                setupFirebaseSave(top1);
+            }
+
+            // Gọi hàm vẽ biểu đồ
             renderResultChart();
         }
-
-
+        // 6. Hàm vẽ biểu đồ Kết quả (Radar Chart) đã tối ưu
         function renderResultChart() {
             const ctx = document.getElementById('resultChart').getContext('2d');
-            new Chart(ctx, {
+
+            // QUAN TRỌNG: Hủy biểu đồ cũ nếu đã tồn tại để tránh lỗi nhấp nháy hoặc hiển thị sai
+            if (resultChartInstance) {
+                resultChartInstance.destroy();
+            }
+
+            resultChartInstance = new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: Object.keys(state.scores),
                     datasets: [{
-                        label: 'Tố chất cá nhân',
+                        label: 'Mức độ phù hợp',
                         data: Object.values(state.scores),
-                        backgroundColor: 'rgba(59,130,246,0.25)',
-                        borderColor: '#3b82f6',
-                        pointBackgroundColor: '#2563eb',
-                        borderWidth: 2
+                        backgroundColor: 'rgba(30, 136, 229, 0.2)', // Màu nền vùng radar (xanh dương nhạt)
+                        borderColor: '#1e88e5',                     // Màu viền
+                        pointBackgroundColor: '#fff',               // Màu điểm
+                        pointBorderColor: '#1e88e5',
+                        pointHoverBackgroundColor: '#1e88e5',
+                        pointHoverBorderColor: '#fff',
+                        borderWidth: 2,
+                        pointRadius: 4
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         r: {
+                            angleLines: {
+                                color: '#e2e8f0' // Màu đường kẻ tia
+                            },
+                            grid: {
+                                color: '#e2e8f0' // Màu lưới
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: "'Plus Jakarta Sans', sans-serif",
+                                    weight: '600'
+                                },
+                                color: '#475569'
+                            },
                             beginAtZero: true,
-                            ticks: { stepSize: 1 }
+                            suggestedMin: 0,
+                            // Tự động scale max dựa trên câu trả lời, hoặc fix cứng nếu muốn
                         }
                     },
-                    plugins: { legend: { display: false } }
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                            padding: 10,
+                            bodyFont: { family: "'Plus Jakarta Sans', sans-serif" }
+                        }
+                    }
                 }
             });
         }
-
         function setupFirebaseSave(topCat) {
             const btn = document.getElementById('save-firebase');
             btn.onclick = async () => {
@@ -1053,42 +650,35 @@
             // Initial Render
             renderQuestion();
 
-            // Render Global Stats Chart
-            new Chart(document.getElementById('globalChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['Kỹ thuật', 'Nghiên cứu', 'Nghệ thuật', 'Xã hội', 'Quản lý', 'Nghiệp vụ'],
-                    datasets: [{
-                        label: 'Tỷ lệ quan tâm (%)',
-                        data: [25, 15, 20, 18, 12, 10],
-                        backgroundColor: ['#1e88e5', '#43a047', '#ffb300', '#f44336', '#9c27b0', '#607d8b'],
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }
-                }
-            });
         });
 
-        // 1. Khai báo biến global ở ngoài hàm
+        // Khai báo biến global ở ngoài cùng (nếu chưa có)
         let globalChartInstance = null;
 
         async function updateGlobalChart() {
             const canvas = document.getElementById("globalChart");
             if (!canvas) return;
-            const ctx = canvas.getContext("2d");
 
-            // 2. NẾU ĐÃ CÓ BIỂU ĐỒ, HÃY HỦY NÓ TRƯỚC
-            if (globalChartInstance) {
-                globalChartInstance.destroy();
+            // Hủy biểu đồ cũ để tránh lỗi "Canvas is already in use"
+            const existingChart = Chart.getChart(canvas);
+            if (existingChart) {
+                existingChart.destroy();
             }
 
+            const ctx = canvas.getContext("2d");
+
             try {
+                // 1. Lấy toàn bộ dữ liệu từ Firebase
                 const snapshot = await db.collection("results").get();
+
+                // 2. CẬP NHẬT TỔNG SỐ LƯỢT TEST
+                const totalCount = snapshot.size; // Lấy tổng số lượng bản ghi
+                const countElement = document.getElementById("total-tests");
+                if (countElement) {
+                    // Hiệu ứng nhảy số cho đẹp (tùy chọn)
+                    animateNumber(countElement, totalCount);
+                }
+
                 const stats = { "Kỹ thuật": 0, "Nghiên cứu": 0, "Nghệ thuật": 0, "Xã hội": 0, "Quản lý": 0, "Nghiệp vụ": 0 };
 
                 snapshot.forEach(doc => {
@@ -1098,7 +688,7 @@
                     }
                 });
 
-                // 3. Gán biểu đồ mới vào biến đã khai báo
+                // 3. Vẽ biểu đồ
                 globalChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -1107,18 +697,42 @@
                             label: 'Số lượng hồ sơ',
                             data: Object.values(stats),
                             backgroundColor: ['#1e88e5', '#43a047', '#ffb300', '#f44336', '#9c27b0', '#607d8b'],
-                            borderRadius: 6
+                            borderRadius: 8
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        scales: { y: { beginAtZero: true } }
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1 } // Đảm bảo trục Y hiển thị số nguyên
+                            }
+                        }
                     }
                 });
             } catch (error) {
                 console.error("Lỗi tải thống kê:", error);
             }
+        }
+
+        // Hàm bổ trợ để tạo hiệu ứng nhảy số từ 0 đến kết quả
+        function animateNumber(element, finalValue) {
+            let start = 0;
+            const duration = 1000; // 1 giây
+            const stepTime = Math.abs(Math.floor(duration / finalValue));
+
+            const timer = setInterval(() => {
+                start++;
+                element.innerText = start;
+                if (start >= finalValue) {
+                    element.innerText = finalValue;
+                    clearInterval(timer);
+                }
+            }, stepTime || 50);
         }
 
         // --- 3. GỬI FEEDBACK VỀ GOOGLE SHEETS ---
@@ -1160,7 +774,7 @@
                 });
         });
 
-        // Gọi hàm vẽ biểu đồ khi tải trang
+        // // Gọi hàm vẽ biểu đồ khi tải trang
         updateGlobalChart();
     </script>
 </body>
