@@ -28,8 +28,15 @@
     </script>
 
     <nav>
-        <div class="container">
+        <div class="container nav-wrapper">
             <a href="#" class="logo"><i class="fas fa-compass"></i> GEN-Z COMPASS</a>
+
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
             <ul class="nav-links">
                 <li><a href="#about">Giới thiệu</a></li>
                 <li><a href="#quiz">Trắc nghiệm</a></li>
@@ -766,6 +773,13 @@
 
         // // Gọi hàm vẽ biểu đồ khi tải trang
         updateGlobalChart();
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
+
+        menu.addEventListener('click', function () {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
     </script>
 </body>
 
