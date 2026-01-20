@@ -555,3 +555,61 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        /* --- RESPONSIVE CHO MOBILE --- */
+        @media screen and (max-width: 768px) {
+
+            /* Hiện nút 3 gạch */
+            .menu-toggle {
+                display: block !important;
+            }
+
+            /* Tạo hình 3 gạch ngang */
+            .bar {
+                width: 25px;
+                height: 3px;
+                background-color: #333;
+                margin: 5px auto;
+                display: block;
+                transition: 0.3s;
+            }
+
+            /* Biến menu thành cột dọc và ẩn đi */
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                /* Khớp với chiều cao header */
+                left: -100%;
+                /* Đẩy ra khỏi màn hình */
+                background-color: #fff;
+                transition: 0.4s;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            /* Khi nhấn nút thì Menu trượt vào */
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            /* Hiệu ứng xoay nút thành dấu X */
+            .menu-toggle.is-active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.is-active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.is-active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
