@@ -298,21 +298,24 @@
 
         // --- 2. DATA STORAGE ---
         const questions = [
-            { q: "Bạn thích tự tay lắp ráp, sửa chữa đồ đạc?", s: "Kỹ thuật" },
-            { q: "Bạn thích quan sát, phân tích các hiện tượng khoa học?", s: "Nghiên cứu" },
-            { q: "Bạn thích vẽ, viết lách hoặc thiết kế sáng tạo?", s: "Nghệ thuật" },
-            { q: "Bạn thích chăm sóc, giảng dạy hoặc giúp đỡ người khác?", s: "Xã hội" },
-            { q: "Bạn thích thuyết phục người khác hoặc làm lãnh đạo?", s: "Quản lý" },
-            { q: "Bạn thích làm việc với các con số và hồ sơ chi tiết?", s: "Nghiệp vụ" },
-            { q: "Bạn thích vận hành máy móc, thiết bị công nghệ?", s: "Kỹ thuật" },
-            { q: "Bạn thích nghiên cứu dữ liệu, AI hoặc khoa học máy tính?", s: "Nghiên cứu" },
-            { q: "Bạn thích sáng tạo nội dung trên mạng xã hội?", s: "Nghệ thuật" },
-            { q: "Bạn thích làm việc nhóm và hỗ trợ tinh thần người khác?", s: "Xã hội" },
-            { q: "Bạn thích đàm phán, kinh doanh và bán hàng?", s: "Quản lý" },
-            { q: "Bạn thích làm kế toán, thống kê hoặc kiểm soát tài chính?", s: "Nghiệp vụ" },
-            { q: "Bạn thích sửa chữa điện, điện tử hoặc cơ khí?", s: "Kỹ thuật" },
-            { q: "Bạn thích tìm quy luật, làm thí nghiệm hoặc viết báo cáo khoa học?", s: "Nghiên cứu" },
-            { q: "Bạn thích thiết kế giao diện, thời trang hoặc mỹ thuật?", s: "Nghệ thuật" }
+            { q: "Bạn cảm thấy hứng thú khi tự tay lắp ráp, tháo rời hoặc sửa chữa các đồ dùng, thiết bị?", s: "Kỹ thuật" },
+            { q: "Bạn thích quan sát hiện tượng tự nhiên và đặt câu hỏi 'vì sao nó xảy ra'?", s: "Nghiên cứu" },
+            { q: "Bạn thường nảy ra ý tưởng mới khi vẽ, viết, thiết kế hoặc sáng tạo nội dung?", s: "Nghệ thuật" },
+            { q: "Bạn thấy vui khi dạy người khác, chăm sóc hoặc hỗ trợ họ vượt qua khó khăn?", s: "Xã hội" },
+            { q: "Bạn thích đứng ra tổ chức, dẫn dắt hoặc thuyết phục người khác làm theo kế hoạch?", s: "Quản lý" },
+            { q: "Bạn cảm thấy thoải mái khi làm việc với số liệu, biểu mẫu, sổ sách hoặc thông tin chi tiết?", s: "Nghiệp vụ" },
+
+            { q: "Bạn thích vận hành, điều khiển máy móc hoặc tìm hiểu cách các thiết bị công nghệ hoạt động?", s: "Kỹ thuật" },
+            { q: "Bạn hứng thú với việc phân tích dữ liệu, lập luận logic hoặc tìm quy luật ẩn phía sau vấn đề?", s: "Nghiên cứu" },
+            { q: "Bạn thích sáng tạo video, hình ảnh, bài viết hoặc xây dựng hình ảnh cá nhân trên mạng xã hội?", s: "Nghệ thuật" },
+            { q: "Bạn thường lắng nghe, chia sẻ và giúp người khác cảm thấy được thấu hiểu?", s: "Xã hội" },
+
+            { q: "Bạn hứng thú với kinh doanh, thương lượng, bán hàng hoặc tìm kiếm cơ hội sinh lời?", s: "Quản lý" },
+            { q: "Bạn thích công việc đòi hỏi sự chính xác cao như kế toán, thống kê hoặc quản lý hồ sơ?", s: "Nghiệp vụ" },
+
+            { q: "Bạn thấy hào hứng khi sửa chữa, đấu nối điện, điện tử hoặc làm việc với cơ khí?", s: "Kỹ thuật" },
+            { q: "Bạn thích làm thí nghiệm, viết báo cáo hoặc tìm bằng chứng để chứng minh một giả thuyết?", s: "Nghiên cứu" },
+            { q: "Bạn quan tâm đến thiết kế giao diện, thời trang, mỹ thuật hoặc bố cục hình ảnh?", s: "Nghệ thuật" }
         ];
 
         const jobLibrary = {
@@ -323,8 +326,7 @@
             "Quản lý": { name: "Quản lý & Kinh doanh", desc: "Bạn có tố chất lãnh đạo, quyết đoán và nhạy bén với cơ hội.", steps: ["Học về quản trị và tài chính", "Thực hành lãnh đạo nhóm nhỏ", "Rèn luyện kỹ năng thuyết trình"] },
             "Nghiệp vụ": { name: "Nghiệp vụ & Tổ chức", desc: "Bạn cẩn thận, ngăn nắp và là 'xương sống' của mọi tổ chức.", steps: ["Thành thạo tin học văn phòng", "Học về quy trình và hệ thống", "Rèn tính tỉ mỉ, chính xác"] }
         };
-
-        /* --- THAY THẾ ĐOẠN CODE NÀY TRONG THẺ <SCRIPT> --- */
+        // --- 3. QUIZ LOGIC ---
 
         // 1. Cập nhật State để lưu lịch sử (history)
         let state = {
@@ -415,8 +417,33 @@
                 renderQuestion();
             }
         }
+        // --- 4. TỰ ĐỘNG LƯU & HIỂN THỊ KẾT QUẢ ---
+        async function autoSave(topCategory) {
+            console.log("Hệ thống đang tự động sao lưu...");
+            try {
+                // Mã hóa dữ liệu trước khi lưu để bảo mật
+                const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(state.scores), SECRET_KEY).toString();
 
+                await db.collection("results").add({
+                    encrypted_data: encryptedData,
+                    result_category: topCategory,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    device: navigator.userAgent
+                });
+
+                console.log("Đã tự động sao lưu thành công!");
+                updateGlobalChart(); // Cập nhật lại biểu đồ thống kê tổng
+            } catch (error) {
+                console.error("Lỗi tự động sao lưu:", error);
+            }
+        }
         function showResult() {
+            // === FIX: Đếm số câu theo từng nhóm (scope-safe) ===
+            const questionCountByCategory = {};
+            questions.forEach(q => {
+                questionCountByCategory[q.s] = (questionCountByCategory[q.s] || 0) + 1;
+            });
+
             // 1. Ẩn giao diện câu hỏi, hiện giao diện kết quả
             document.getElementById('quiz-interface').style.display = 'none';
             document.getElementById('result-body').style.display = 'block';
@@ -434,17 +461,22 @@
 
             const [top1, score1] = sorted[0];
             const [top2, score2] = sorted[1];
+            // Đếm số câu thuộc mỗi nhóm
+
 
             // 4. Tính độ chắc chắn (tương đối)
-            const maxPossibleScore = questions.length * 2;
-            const confidence = Math.round((score1 / maxPossibleScore) * 100);
+            const maxScoreTop1 = questionCountByCategory[top1] * 2;
+            const maxScoreTop2 = questionCountByCategory[top2] * 2;
+            const confidence = Math.round((score1 / maxScoreTop1) * 100);
+
+
 
             // 5. Phân loại kiểu hồ sơ
             let profileType = "Định hướng rõ rệt";
             // Nếu điểm top 1 và top 2 quá gần nhau
             if (Math.abs(score1 - score2) <= 2) profileType = "Đa năng – Linh hoạt";
             // Nếu điểm cao nhất quá thấp (dưới 30% tổng điểm)
-            if (score1 < (maxPossibleScore * 0.3)) profileType = "Đang khám phá bản thân";
+            if (score1 < (maxScoreTop1 * 0.5)) profileType = "Đang khám phá bản thân";
 
             // 6. Tạo nhận xét thông minh (AI Comment)
             let aiComment = `
@@ -453,7 +485,7 @@
     `;
 
             // Nhận xét thêm về nhóm thứ 2 nếu điểm khá cao
-            if (score2 > (maxPossibleScore * 0.4)) {
+            if (score2 >= (maxScoreTop2 * 0.6)) {
                 aiComment += `
             <br><br>
             🔹 <b>Tố chất kết hợp:</b> Bạn cũng có tố chất khá mạnh của nhóm <b>${jobLibrary[top2].name}</b>. 
@@ -497,6 +529,7 @@
 
             // Gọi hàm vẽ biểu đồ
             renderResultChart();
+            autoSave(top1); // Gọi hàm Auto-save ngay lập tức
         }
         // 6. Hàm vẽ biểu đồ Kết quả (Radar Chart) đã tối ưu
         function renderResultChart() {
@@ -782,5 +815,4 @@
         });
     </script>
 </body>
-
 </html>
