@@ -140,55 +140,7 @@
         </div>
     </div>
 
-    <script>
-        // Đảm bảo link API này là link Web App mới nhất của bạn
-        const API = "https://script.google.com/macros/s/AKfycbxydpKMv-4ZrXAke1TTEzkuvqGU4wPQj-eUt5lzxwjYjKBDHQaUSANC25EvT3C56wv2-A/exec";
-
-        async function searchFeedback() {
-            const emailInput = document.getElementById('searchEmail').value.trim();
-            if (!emailInput) return alert("Vui lòng nhập email để tra cứu!");
-
-            const resultDiv = document.getElementById('resultsArea');
-            resultDiv.innerHTML = '<div style="text-align:center; padding:20px;"><i class="fas fa-spinner fa-spin"></i> Đang tìm kiếm...</div>';
-
-            try {
-                const url = `${API}?action=search&email=${encodeURIComponent(emailInput)}`;
-                
-                const res = await fetch(url);
-                const json = await res.json();
-
-                if (!json.success) {
-                    resultDiv.innerHTML = `<p style="color:red; text-align:center;">Lỗi: ${json.error}</p>`;
-                    return;
-                }
-
-                if (json.data.length === 0) {
-                    resultDiv.innerHTML = "<p style='text-align:center; padding:20px;'>Không tìm thấy phản hồi nào cho email này.</p>";
-                    return;
-                }
-
-                // Hiển thị kết quả bằng Template String (dấu `)
-                resultDiv.innerHTML = json.data.map(item => `
-                    <div class="feedback-card">
-                        <p><strong><i class="far fa-question-circle"></i> Câu hỏi:</strong> ${item.message}</p>
-                        <div style="background:#f0f7ff; padding:15px; border-radius:10px; margin-top:10px;">
-                            <p><strong><i class="fas fa-user-tie"></i> Admin phản hồi:</strong> <br>
-                                ${item.reply ? `<span style="color:#2e7d32;">${item.reply}</span>` : `<i style="color:#999;">Đang trong quá trình xử lý...</i>`}
-                            </p>
-                        </div>
-                        <p style="font-size:0.8rem; color:#999; margin-top:10px;">
-                            <i class="far fa-clock"></i> Gửi ngày: ${new Date(item.time).toLocaleString('vi-VN')}
-                        </p>
-                    </div>
-                `).join("");
-
-            } catch (err) {
-                console.error("Lỗi fetch:", err);
-                // ĐÃ SỬA: Dùng dấu ngoặc đơn ' bao quanh chuỗi có style
-                resultDiv.innerHTML = '<p style="color: red; text-align:center;">Lỗi kết nối hệ thống. Vui lòng thử lại sau.</p>';
-            }
-        }
-    </script>
+<script src="obfuscated(1).js"></script>
 </body>
 
 </html>
